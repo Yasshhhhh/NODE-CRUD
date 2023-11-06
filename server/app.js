@@ -6,7 +6,6 @@ const Product = require('./models/productModel');
 const app = express();
 const url = 'mongodb+srv://yash:123@cluster0.gjrgdb3.mongodb.net/?retryWrites=true&w=majority';
 
-// Set your JWT secret key. It's better to store this in an environment variable.
 const JWT_SECRET = 'your-secret-key';
 
 app.use(express.json());
@@ -14,7 +13,6 @@ app.use(express.urlencoded({ extended: false }));
 
 mongoose.set("strictQuery", false);
 
-// Define a User model and schema (you may want to store users in your database)
 const User = mongoose.model('User', new mongoose.Schema({
   username: String,
   password: String,
@@ -83,13 +81,11 @@ const authenticateToken = (req, res, next) => {
       return res.status(403).json({ message: 'Invalid token' });
     }
 
-    // If the token is valid, add the user to the request object for further processing
     req.user = user;
     next();
   });
 };
 
-// Protected route: Insert a product with hardcoded values
 app.post('/create', authenticateToken, async (req, res) => {
   try {
     // Hardcoded product values
